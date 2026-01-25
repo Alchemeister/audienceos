@@ -1,0 +1,8 @@
+export { Navigation } from "./Navigation"
+export { Hero } from "./Hero"
+export { SocialProof } from "./SocialProof"
+export { Features } from "./Features"
+export { Metrics } from "./Metrics"
+export { Pricing } from "./Pricing"
+export { CTASection } from "./CTASection"
+export { Footer } from "./Footer"
