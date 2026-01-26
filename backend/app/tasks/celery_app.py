@@ -17,6 +17,8 @@ celery_app = Celery(
         "app.tasks.monitoring",
         "app.tasks.insights",
         "app.tasks.billing",
+        "app.tasks.backfill",
+        "app.tasks.keywords",
     ],
 )
 
@@ -96,6 +98,12 @@ celery_app.conf.beat_schedule = {
         "schedule": crontab(hour=12, minute=0),  # Noon UTC daily
         "options": {"queue": "billing"},
     },
+    # Incremental backfill to catch missed mentions (runs daily)
+    "incremental-backfill-daily": {
+        "task": "app.tasks.backfill.scheduled_incremental_backfill",
+        "schedule": crontab(hour=2, minute=0),  # 2 AM UTC daily
+        "options": {"queue": "backfill"},
+    },
 }
 
 # Task routing
@@ -104,6 +112,8 @@ celery_app.conf.task_routes = {
     "app.tasks.feedback.*": {"queue": "feedback"},
     "app.tasks.insights.*": {"queue": "insights"},
     "app.tasks.billing.*": {"queue": "billing"},
+    "app.tasks.backfill.*": {"queue": "backfill"},
+    "app.tasks.keywords.*": {"queue": "keywords"},
 }
 
 
