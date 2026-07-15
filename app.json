@@ -1,0 +1,53 @@
+{
+  "name": "AudienceOS",
+  "description": "AI-powered audience research and content generation platform",
+  "repository": "https://github.com/yourusername/audienceos",
+  "logo": "https://raw.githubusercontent.com/yourusername/audienceos/main/logo.png",
+  "keywords": ["audience", "research", "ai", "content", "marketing"],
+  "website": "https://audienceos.com",
+  "success_url": "/",
+  "env": {
+    "ANTHROPIC_API_KEY": {
+      "description": "Your Anthropic Claude API key",
+      "required": true
+    },
+    "SECRET_KEY": {
+      "description": "Secret key for sessions",
+      "generator": "secret"
+    },
+    "DATABASE_URL": {
+      "description": "PostgreSQL database URL",
+      "value": "***REMOVED_SECRET***"
+    },
+    "REDDIT_CLIENT_ID": {
+      "description": "Reddit API client ID",
+      "required": false
+    },
+    "REDDIT_CLIENT_SECRET": {
+      "description": "Reddit API client secret",
+      "required": false
+    }
+  },
+  "formation": {
+    "web": {
+      "quantity": 1,
+      "size": "free"
+    }
+  },
+  "addons": [
+    {
+      "plan": "heroku-postgresql:hobby-dev"
+    },
+    {
+      "plan": "heroku-redis:hobby-dev"
+    }
+  ],
+  "buildpacks": [
+    {
+      "url": "heroku/python"
+    }
+  ],
+  "scripts": {
+    "postdeploy": "cd backend && python manage.py migrate"
+  }
+}
